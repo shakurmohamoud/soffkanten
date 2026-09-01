@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Miljövariabler med lösenord
+.env
+
+# Beroenden
+/vendor/
