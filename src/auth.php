@@ -48,3 +48,57 @@ function skapaAnvandare(
 
     return (int) hamtaDatabas()->lastInsertId();
 }
+
+/**
+ * Kontrollerar e-post och lösenord.
+ * Returnerar användarens id vid rätt uppgifter, annars null.
+ */
+function loggaIn(string $epost, string $losenord): ?int
+{
+    $sats = hamtaDatabas()->prepare(
+        'SELECT id, password_hash FROM users WHERE email = ?'
+    );
+
+    $sats->execute([$epost]);
+    $anvandare = $sats->fetch();
+
+    if (!$anvandare) {
+        return null;
+    }
+
+    if (!password_verify($losenord, $anvandare['password_hash'])) {
+        return null;
+    }
+
+    return (int) $anvandare['id'];
+}
+
+/**
+ * Returnerar id på inloggad användare, eller null om ingen är inloggad.
+ */
+function inloggadAnvandarId(): ?int
+{
+    startaSession();
+
+    return $_SESSION['anvandar_id'] ?? null;
+}
+
+/**
+ * Hämtar uppgifter om den inloggade användaren.
+ */
+function inloggadAnvandare(): ?array
+{
+    $id = inloggadAnvandarId();
+
+    if ($id === null) {
+        return null;
+    }
+
+    $sats = hamtaDatabas()->prepare(
+        'SELECT id, first_name, last_name, email FROM users WHERE id = ?'
+    );
+
+    $sats->execute([$id]);
+
+    return $sats->fetch() ?: null;
+}
