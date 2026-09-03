@@ -18,6 +18,7 @@ $anvandare = inloggadAnvandare();
            <?= htmlspecialchars($anvandare['first_name']) ?>
            <?= htmlspecialchars($anvandare['last_name']) ?>
         </p>
+        <p><a href="logga-ut.php">Logga ut</a></p>
     <?php else: ?>
         <p>Du är inte inloggad.</p>
         <p>
