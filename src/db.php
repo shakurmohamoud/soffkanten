@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Databaskoppling.
- * Läser inställningar från miljövariabler och returnerar en PDO-anslutning.
+ * Koppling till databasen
+ * Hämtar inloggningsuppgifterna från miljövariabler
  */
 
 function hamtaDatabas(): PDO

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Användare och inloggning.
- * Hanterar registrering, lösenordshashning och sessioner.
+ * Allt som rör användare och inloggning
+ * Registrering, lösenord och sessioner
  */
 
 require_once __DIR__ . '/db.php';
 
 /**
- * Startar sessionen om den inte redan är igång.
+ * Startar sessionen om den inte redan är igång
  */
 function startaSession(): void
 {
@@ -18,7 +18,7 @@ function startaSession(): void
 }
 
 /**
- * Kontrollerar om e-postadressen redan finns i databasen.
+ * Kollar om e-postadressen redan är upptagen
  */
 function epostFinns(string $epost): bool
 {
@@ -29,7 +29,7 @@ function epostFinns(string $epost): bool
 }
 
 /**
- * Skapar en ny användare och returnerar dess id.
+ * Sparar en ny användare och ger tillbaka id:t
  */
 function skapaAnvandare(
     string $fornamn,
@@ -50,8 +50,8 @@ function skapaAnvandare(
 }
 
 /**
- * Kontrollerar e-post och lösenord.
- * Returnerar användarens id vid rätt uppgifter, annars null.
+ * Kollar e-post och lösenord
+ * Ger tillbaka id:t om de stämmer, annars null
  */
 function loggaIn(string $epost, string $losenord): ?int
 {
@@ -74,7 +74,7 @@ function loggaIn(string $epost, string $losenord): ?int
 }
 
 /**
- * Returnerar id på inloggad användare, eller null om ingen är inloggad.
+ * Ger tillbaka id:t på den som är inloggad, annars null
  */
 function inloggadAnvandarId(): ?int
 {
@@ -84,7 +84,7 @@ function inloggadAnvandarId(): ?int
 }
 
 /**
- * Hämtar uppgifter om den inloggade användaren.
+ * Hämtar namn och e-post för den som är inloggad
  */
 function inloggadAnvandare(): ?array
 {

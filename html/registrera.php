@@ -41,60 +41,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$fel) {
         $anvandarId = skapaAnvandare($fornamn, $efternamn, $epost, $losenord);
 
+        session_regenerate_id(true);
+
         $_SESSION['anvandar_id'] = $anvandarId;
 
         header('Location: index.php');
         exit;
     }
 }
+
+$sidtitel = 'Skapa konto';
+
+require __DIR__ . '/../src/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="utf-8">
-    <title>Skapa konto - Soffkanten</title>
-</head>
-<body>
-    <h1>Skapa konto</h1>
 
-    <?php if ($fel): ?>
-        <ul>
-            <?php foreach ($fel as $meddelande): ?>
-                <li><?= htmlspecialchars($meddelande) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
+<h1>Skapa konto</h1>
 
-    <form method="post">
-        <p>
-            <label for="fornamn">Förnamn</label><br>
-            <input type="text" id="fornamn" name="fornamn"
-                   value="<?= htmlspecialchars($fornamn) ?>" required>
-        </p>
+<?php if ($fel): ?>
+    <ul class="fel">
+        <?php foreach ($fel as $meddelande): ?>
+            <li><?= htmlspecialchars($meddelande) ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
 
-        <p>
-            <label for="efternamn">Efternamn</label><br>
-            <input type="text" id="efternamn" name="efternamn"
-                   value="<?= htmlspecialchars($efternamn) ?>" required>
-        </p>
+<form method="post">
+    <p>
+        <label for="fornamn">Förnamn</label><br>
+        <input type="text" id="fornamn" name="fornamn"
+               value="<?= htmlspecialchars($fornamn) ?>" required>
+    </p>
 
-        <p>
-            <label for="epost">E-post</label><br>
-            <input type="email" id="epost" name="epost"
-                   value="<?= htmlspecialchars($epost) ?>" required>
-        </p>
+    <p>
+        <label for="efternamn">Efternamn</label><br>
+        <input type="text" id="efternamn" name="efternamn"
+               value="<?= htmlspecialchars($efternamn) ?>" required>
+    </p>
 
-        <p>
-            <label for="losenord">Lösenord</label><br>
-            <input type="password" id="losenord" name="losenord" required>
-        </p>
+    <p>
+        <label for="epost">E-post</label><br>
+        <input type="email" id="epost" name="epost"
+               value="<?= htmlspecialchars($epost) ?>" required>
+    </p>
 
-        <p>
-            <label for="losenord_igen">Upprepa lösenord</label><br>
-            <input type="password" id="losenord_igen" name="losenord_igen" required>
-        </p>
+    <p>
+        <label for="losenord">Lösenord</label><br>
+        <input type="password" id="losenord" name="losenord" required>
+    </p>
 
-        <button type="submit">Skapa konto</button>
-    </form>
-</body>
-</html>
+    <p>
+        <label for="losenord_igen">Upprepa lösenord</label><br>
+        <input type="password" id="losenord_igen" name="losenord_igen" required>
+    </p>
+
+    <button type="submit">Skapa konto</button>
+</form>
+
+<p>Har du redan ett konto? <a href="logga-in.php">Logga in här</a>.</p>
+
+<?php require __DIR__ . '/../src/footer.php'; ?>
