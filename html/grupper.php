@@ -10,6 +10,18 @@ if ($anvandarId === null) {
     exit;
 }
 
+// Tar emot en ansökan och laddar om sidan så att formuläret inte skickas igen
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $gruppId = (int) ($_POST['grupp_id'] ?? 0);
+
+    if ($gruppId > 0) {
+        ansokOmMedlemskap($gruppId, $anvandarId);
+    }
+
+    header('Location: grupper.php');
+    exit;
+}
+
 $grupper = ovrigaGrupper($anvandarId);
 
 $sidtitel = 'Alla grupper';
@@ -33,7 +45,11 @@ require __DIR__ . '/../src/header.php';
                 <?php if ($grupp['ansokan'] === 'pending'): ?>
                     <p class="markering">Din ansökan väntar på svar</p>
                 <?php else: ?>
-                    <p>Ansökningsknapp kommer imorgon.</p>
+                    <form method="post">
+                        <input type="hidden" name="grupp_id" value="<?= (int) $grupp['id'] ?>">
+
+                        <button type="submit">Ansök om medlemskap</button>
+                    </form>
                 <?php endif; ?>
             </li>
         <?php endforeach; ?>

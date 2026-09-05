@@ -116,3 +116,17 @@ function rollIGrupp(int $gruppId, int $anvandarId): ?string
 
     return $rad ? $rad['role'] : null;
 }
+
+/**
+ * Skickar in en ansökan om att gå med i en grupp
+ * Unik regel i databasen gör att en dubblett hoppas över
+ */
+function ansokOmMedlemskap(int $gruppId, int $anvandarId): void
+{
+    $sats = hamtaDatabas()->prepare(
+        'INSERT IGNORE INTO group_members (group_id, user_id, status, role)
+         VALUES (?, ?, ?, ?)'
+    );
+
+    $sats->execute([$gruppId, $anvandarId, 'pending', 'member']);
+}
