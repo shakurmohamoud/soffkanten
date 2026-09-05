@@ -130,3 +130,51 @@ function ansokOmMedlemskap(int $gruppId, int $anvandarId): void
 
     $sats->execute([$gruppId, $anvandarId, 'pending', 'member']);
 }
+
+/**
+ * Hämtar väntande ansökningar till en grupp
+ */
+function vantandeAnsokningar(int $gruppId): array
+{
+    $sats = hamtaDatabas()->prepare(
+        'SELECT u.id, u.first_name, u.last_name
+         FROM group_members m
+         JOIN users u ON u.id = m.user_id
+         WHERE m.group_id = ? AND m.status = ?
+         ORDER BY u.first_name'
+    );
+
+    $sats->execute([$gruppId, 'pending']);
+
+    return $sats->fetchAll();
+}
+
+/**
+ * Godkänner en ansökan
+ * Kopplingen till adm gör att raden bara ändras om den som godkänner är admin i gruppen
+ */
+function godkannAnsokan(int $gruppId, int $anvandarId, int $adminId): void
+{
+    $sats = hamtaDatabas()->prepare(
+        'UPDATE group_members AS ansokan
+         JOIN group_members AS adm
+           ON adm.group_id = ansokan.group_id
+          AND adm.user_id = ?
+          AND adm.status = ?
+          AND adm.role = ?
+         SET ansokan.status = ?
+         WHERE ansokan.group_id = ?
+           AND ansokan.user_id = ?
+           AND ansokan.status = ?'
+    );
+
+    $sats->execute([
+        $adminId,
+        'member',
+        'admin',
+        'member',
+        $gruppId,
+        $anvandarId,
+        'pending',
+    ]);
+}

@@ -44,6 +44,20 @@ if ($roll === null) {
     exit;
 }
 
+// Tar emot ett godkännande och laddar om sidan så att formuläret inte skickas igen
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $sokandeId = (int) ($_POST['anvandar_id'] ?? 0);
+
+    if ($sokandeId > 0) {
+        godkannAnsokan($gruppId, $sokandeId, $anvandarId);
+    }
+
+    header('Location: grupp.php?id=' . $gruppId);
+    exit;
+}
+
+$ansokningar = $roll === 'admin' ? vantandeAnsokningar($gruppId) : [];
+
 $sidtitel = $grupp['name'];
 
 require __DIR__ . '/../src/header.php';
@@ -55,6 +69,28 @@ require __DIR__ . '/../src/header.php';
 
 <?php if ($roll === 'admin'): ?>
     <p>Du är administratör för den här gruppen.</p>
+
+    <h2>Ansökningar</h2>
+
+    <?php if (!$ansokningar): ?>
+        <p>Inga ansökningar just nu.</p>
+    <?php else: ?>
+        <ul class="ansokningslista">
+            <?php foreach ($ansokningar as $ansokande): ?>
+                <li>
+                    <span>
+                        <?= htmlspecialchars($ansokande['first_name'] . ' ' . $ansokande['last_name']) ?>
+                    </span>
+
+                    <form method="post">
+                        <input type="hidden" name="anvandar_id" value="<?= (int) $ansokande['id'] ?>">
+
+                        <button type="submit">Godkänn</button>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 <?php endif; ?>
 
 <h2>Diskussioner</h2>
