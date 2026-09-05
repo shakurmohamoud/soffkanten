@@ -178,3 +178,59 @@ function godkannAnsokan(int $gruppId, int $anvandarId, int $adminId): void
         'pending',
     ]);
 }
+
+/**
+ * Hämtar medlemmarna i en grupp med deras roll
+ */
+function gruppensMedlemmar(int $gruppId): array
+{
+    $sats = hamtaDatabas()->prepare(
+        'SELECT u.id, u.first_name, u.last_name, m.role
+         FROM group_members m
+         JOIN users u ON u.id = m.user_id
+         WHERE m.group_id = ? AND m.status = ?
+         ORDER BY u.first_name'
+    );
+
+    $sats->execute([$gruppId, 'member']);
+
+    return $sats->fetchAll();
+}
+
+/**
+ * Sätter rollen på en medlem
+ * En admin kan inte ändra sin egen roll och kan därför inte låsa gruppen
+ */
+function sattRoll(int $gruppId, int $anvandarId, string $roll, int $adminId): void
+{
+    if ($roll !== 'member' && $roll !== 'admin') {
+        return;
+    }
+
+    if ($anvandarId === $adminId) {
+        return;
+    }
+
+    $sats = hamtaDatabas()->prepare(
+        'UPDATE group_members AS medlem
+         JOIN group_members AS adm
+           ON adm.group_id = medlem.group_id
+          AND adm.user_id = ?
+          AND adm.status = ?
+          AND adm.role = ?
+         SET medlem.role = ?
+         WHERE medlem.group_id = ?
+           AND medlem.user_id = ?
+           AND medlem.status = ?'
+    );
+
+    $sats->execute([
+        $adminId,
+        'member',
+        'admin',
+        $roll,
+        $gruppId,
+        $anvandarId,
+        'member',
+    ]);
+}
