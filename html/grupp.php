@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../src/auth.php';
 require __DIR__ . '/../src/grupper.php';
+require __DIR__ . '/../src/diskussioner.php';
 
 $anvandarId = inloggadAnvandarId();
 
@@ -44,6 +45,8 @@ if ($roll === null) {
     exit;
 }
 
+$fel = '';
+
 // Fältet atgard skiljer de olika formulären åt
 // Sidan laddas om efteråt så att formuläret inte skickas igen
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -52,18 +55,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($atgard === 'godkann' && $valdAnvandarId > 0) {
         godkannAnsokan($gruppId, $valdAnvandarId, $anvandarId);
+
+        header('Location: grupp.php?id=' . $gruppId);
+        exit;
     }
 
     if ($atgard === 'roll' && $valdAnvandarId > 0) {
         sattRoll($gruppId, $valdAnvandarId, $_POST['roll'] ?? '', $anvandarId);
+
+        header('Location: grupp.php?id=' . $gruppId);
+        exit;
     }
 
-    header('Location: grupp.php?id=' . $gruppId);
-    exit;
+    if ($atgard === 'amne') {
+        $rubrik = trim($_POST['rubrik'] ?? '');
+        $text = trim($_POST['text'] ?? '');
+
+        if ($rubrik === '' || $text === '') {
+            $fel = 'Fyll i både ämne och ett första inlägg.';
+        } else {
+            $amneId = skapaAmne($gruppId, $anvandarId, $rubrik, $text);
+
+            header('Location: amne.php?id=' . $amneId);
+            exit;
+        }
+    }
 }
 
 $ansokningar = $roll === 'admin' ? vantandeAnsokningar($gruppId) : [];
 $medlemmar = $roll === 'admin' ? gruppensMedlemmar($gruppId) : [];
+$amnen = gruppensAmnen($gruppId);
 
 $sidtitel = $grupp['name'];
 
@@ -128,8 +149,42 @@ require __DIR__ . '/../src/header.php';
     </ul>
 <?php endif; ?>
 
+<h2>Starta en diskussion</h2>
+
+<?php if ($fel !== ''): ?>
+    <p class="fel"><?= htmlspecialchars($fel) ?></p>
+<?php endif; ?>
+
+<form method="post" class="amnesformular">
+    <input type="hidden" name="atgard" value="amne">
+
+    <label for="rubrik">Ämne</label>
+    <input type="text" id="rubrik" name="rubrik" maxlength="200" required>
+
+    <label for="text">Första inlägget</label>
+    <textarea id="text" name="text" rows="5" required></textarea>
+
+    <button type="submit">Starta diskussion</button>
+</form>
+
 <h2>Diskussioner</h2>
 
-<p>Inga diskussioner än.</p>
+<?php if (!$amnen): ?>
+    <p>Inga diskussioner än.</p>
+<?php else: ?>
+    <ul class="amneslista">
+        <?php foreach ($amnen as $amne): ?>
+            <li>
+                <a href="amne.php?id=<?= (int) $amne['id'] ?>">
+                    <?= htmlspecialchars($amne['title']) ?>
+                </a>
+
+                <span class="meta">
+                    startad av <?= htmlspecialchars($amne['first_name'] . ' ' . $amne['last_name']) ?>
+                </span>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
 
 <?php require __DIR__ . '/../src/footer.php'; ?>
