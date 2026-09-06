@@ -3,6 +3,7 @@
 require __DIR__ . '/../src/auth.php';
 require __DIR__ . '/../src/grupper.php';
 require __DIR__ . '/../src/diskussioner.php';
+require __DIR__ . '/../src/inbjudningar.php';
 
 $anvandarId = inloggadAnvandarId();
 
@@ -46,6 +47,7 @@ if ($roll === null) {
 }
 
 $fel = '';
+$inbjudningslank = '';
 
 // Fältet atgard skiljer de olika formulären åt
 // Sidan laddas om efteråt så att formuläret inte skickas igen
@@ -79,6 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: amne.php?id=' . $amneId);
             exit;
         }
+    }
+
+    // Länken visas direkt i svaret eftersom den skulle försvinna vid en omladdning
+    if ($atgard === 'inbjudan' && $roll === 'admin') {
+        $nyckel = skapaInbjudan($gruppId, $anvandarId);
+
+        $inbjudningslank = 'http://' . $_SERVER['HTTP_HOST'] . '/inbjudan.php?token=' . $nyckel;
     }
 }
 
@@ -147,6 +156,20 @@ require __DIR__ . '/../src/header.php';
             </li>
         <?php endforeach; ?>
     </ul>
+
+    <h2>Bjud in</h2>
+
+    <p>Länken gäller i 24 timmar och kan bara användas en gång.</p>
+
+    <?php if ($inbjudningslank !== ''): ?>
+        <input type="text" class="inbjudningslank" value="<?= htmlspecialchars($inbjudningslank) ?>" readonly>
+    <?php endif; ?>
+
+    <form method="post">
+        <input type="hidden" name="atgard" value="inbjudan">
+
+        <button type="submit">Skapa inbjudningslänk</button>
+    </form>
 <?php endif; ?>
 
 <h2>Starta en diskussion</h2>

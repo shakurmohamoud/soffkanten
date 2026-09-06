@@ -49,3 +49,15 @@ CREATE TABLE posts (
     FOREIGN KEY (topic_id) REFERENCES topics(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE invites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    group_id INT NOT NULL,
+    created_by INT NOT NULL,
+    token VARCHAR(64) NOT NULL UNIQUE,
+    expires_at DATETIME NOT NULL,
+    used TINYINT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (group_id) REFERENCES forum_groups(id),
+    FOREIGN KEY (created_by) REFERENCES users(id)
+);
