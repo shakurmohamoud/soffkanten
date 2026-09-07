@@ -1,4 +1,33 @@
-/* Grundstil för Soffkanten */
+/* Stil för Soffkanten */
+
+/* Typsnitten ligger lokalt så att sidan ser likadan ut utan internet */
+@font-face {
+    font-family: "Bricolage Grotesque";
+    src: url("typsnitt/bricolage.woff2") format("woff2");
+    font-weight: 600 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("typsnitt/inter.woff2") format("woff2");
+    font-weight: 400 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Färger och typsnitt på ett ställe */
+:root {
+    --botten: #eaeeea;
+    --yta: #ffffff;
+    --text: #0f1416;
+    --svag: #626c6c;
+    --linje: #d2d9d3;
+    --accent: #17403d;
+    --accent-ljus: #dfe8e5;
+    --rubrik: "Bricolage Grotesque", system-ui, sans-serif;
+}
 
 * {
     box-sizing: border-box;
@@ -6,130 +35,378 @@
 
 body {
     margin: 0;
-    font-family: system-ui, sans-serif;
+    font-family: Inter, system-ui, sans-serif;
     line-height: 1.6;
-    color: #222;
-    background: #fafafa;
+    color: var(--text);
+    background: var(--botten);
 }
 
 header {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 1rem;
-    padding: 1rem 2rem;
-    background: #fff;
-    border-bottom: 1px solid #ddd;
+    padding: 1.1rem 2rem;
+    border-bottom: 1px solid var(--linje);
 }
 
 .logotyp {
-    font-size: 1.3rem;
-    font-weight: bold;
+    font-family: var(--rubrik);
+    font-weight: 800;
+    font-size: 1.7rem;
+    letter-spacing: -0.05em;
+    color: var(--text);
     text-decoration: none;
-    color: #222;
 }
 
 nav a {
-    margin-left: 1.5rem;
+    margin-left: 1.4rem;
+    font-size: 0.9rem;
+    color: var(--svag);
     text-decoration: none;
-    color: #444;
 }
 
 nav a:hover {
-    text-decoration: underline;
+    color: var(--text);
 }
 
 main {
     max-width: 700px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 3rem 1.5rem 4rem;
 }
 
 h1 {
-    margin-top: 0;
+    font-family: var(--rubrik);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.1rem);
+    line-height: 1.02;
+    letter-spacing: -0.05em;
+    margin: 0 0 0.6rem;
 }
 
-label {
-    font-weight: bold;
+h2 {
+    font-family: var(--rubrik);
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: -0.035em;
+    margin: 3.25rem 0 1.1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--linje);
 }
 
-input,
-textarea {
-    width: 100%;
-    padding: 0.6rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+a {
+    color: var(--accent);
 }
 
-textarea {
-    font-family: inherit;
-    resize: vertical;
+/* Startsidan - rubriken bär sidan */
+.hjalte {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4.5rem;
 }
 
-button {
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    cursor: pointer;
+.hjalte h1 {
+    font-size: clamp(3.2rem, 11vw, 7.5rem);
+    line-height: 0.88;
+    letter-spacing: -0.06em;
+    margin: 0 0 2rem;
+    max-width: 9ch;
+}
+
+.hjalte h1 span {
+    display: block;
+}
+
+.hjalte .ingress {
+    font-size: 1.15rem;
+    color: var(--svag);
+    max-width: 40ch;
+    margin: 0 0 2.25rem;
+}
+
+.knapprad {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* Tre rutor under hjälten som förklarar vad man gör på sidan */
+.funktioner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+    border-top: 1px solid var(--linje);
+}
+
+.funktion h2 {
+    margin: 0 0 0.5rem;
+    padding: 0;
     border: none;
-    border-radius: 4px;
-    background: #333;
-    color: #fff;
+    font-size: 1.15rem;
 }
 
-button:hover {
-    background: #000;
+.funktion p {
+    margin: 0;
+    color: var(--svag);
 }
 
-.fel {
-    padding: 1rem;
-    border-left: 4px solid #c00;
-    background: #fee;
-    color: #900;
+/* Länken till gruppen ovanför en diskussionsrubrik */
+.brodsmula {
+    margin: 0 0 0.6rem;
+    font-size: 0.85rem;
 }
 
-footer {
-    padding: 2rem;
-    text-align: center;
-    color: #777;
-    border-top: 1px solid #ddd;
+.brodsmula a {
+    font-weight: 500;
+    text-decoration: none;
 }
 
-.grupplista {
+.brodsmula a:hover {
+    text-decoration: underline;
+}
+
+.beskrivning {
+    margin: 0 0 3rem;
+    color: var(--svag);
+    max-width: 52ch;
+}
+
+ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
+/* Listan över grupper */
 .grupplista li {
-    margin-bottom: 1.5rem;
-    padding: 1.5rem;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--linje);
+}
+
+.grupplista li:last-child {
+    border-bottom: none;
 }
 
 .grupplista h2 {
-    margin: 0 0 0.5rem;
-    font-size: 1.2rem;
+    margin: 0 0 0.35rem;
+    padding: 0;
+    border: none;
+    font-size: 1.4rem;
+    letter-spacing: -0.04em;
 }
 
 .grupplista h2 a {
-    color: #222;
+    color: var(--text);
     text-decoration: none;
 }
 
 .grupplista h2 a:hover {
-    text-decoration: underline;
+    color: var(--accent);
+}
+
+.grupplista p {
+    margin: 0 0 0.75rem;
+    color: var(--svag);
+}
+
+/* Ansökningar och medlemmar */
+.ansokningslista li,
+.medlemslista li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--linje);
+}
+
+.ansokningslista li:last-child,
+.medlemslista li:last-child {
+    border-bottom: none;
+}
+
+.ansokningslista form,
+.medlemslista form {
+    margin: 0;
+}
+
+.roll {
+    font-size: 0.85rem;
+    color: var(--svag);
+}
+
+/* Listan över diskussioner */
+.amneslista li {
+    padding: 1.15rem 0;
+    border-bottom: 1px solid var(--linje);
+}
+
+.amneslista li:last-child {
+    border-bottom: none;
+}
+
+.amneslista a {
+    font-family: var(--rubrik);
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.amneslista a:hover {
+    color: var(--accent);
+}
+
+/* Inläggen hänger på en linje som håller ihop samtalet */
+.inlaggslista {
+    position: relative;
+    padding-left: 2.1rem;
+}
+
+.inlaggslista::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.1rem;
+    bottom: 1.4rem;
+    width: 2px;
+    background: var(--accent);
+}
+
+.inlaggslista li {
+    padding: 0 0 2rem;
+}
+
+.inlaggslista li:last-child {
+    padding-bottom: 0;
+}
+
+.inlaggslista .meta {
+    position: relative;
+    margin: 0 0 0.35rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.inlaggslista .meta::before {
+    content: "";
+    position: absolute;
+    left: -2.1rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    transform: translateX(-4px);
+}
+
+.inlaggslista li:first-child p:last-child {
+    font-size: 1.15rem;
+    line-height: 1.55;
+}
+
+.inlaggslista p:last-child {
+    margin: 0;
+}
+
+.meta {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+    color: var(--svag);
+}
+
+/* Formulär */
+label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    margin-bottom: 1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: var(--yta);
+    border: 1px solid var(--linje);
+    border-radius: 2px;
+}
+
+input:focus,
+textarea:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: -1px;
+    border-color: var(--accent);
+}
+
+textarea {
+    resize: vertical;
+}
+
+button,
+.knapp {
+    display: inline-block;
+    padding: 0.65rem 1.3rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #fff;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.sekundar {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--linje);
+}
+
+.sekundar:hover {
+    border-color: var(--text);
+}
+
+/* Inbjudningslänken visas i ett fält man kan kopiera från */
+.inbjudningslank {
+    font-size: 0.85rem;
+    color: var(--svag);
 }
 
 .markering {
     display: inline-block;
-    margin: 0;
-    padding: 0.2rem 0.6rem;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    background: var(--accent-ljus);
+    border-radius: 2px;
+    color: var(--accent);
+}
+
+.fel {
+    padding: 0.85rem 1rem;
+    margin-bottom: 1.25rem;
+    border-left: 3px solid #a8482f;
+    background: #f6e9e5;
+    color: #7d3521;
+}
+
+footer {
+    padding: 2rem;
+    text-align: center;
     font-size: 0.85rem;
-    background: #eee;
-    border-radius: 4px;
-    color: #555;
+    color: var(--svag);
+    border-top: 1px solid var(--linje);
 }
