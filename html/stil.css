@@ -381,12 +381,14 @@ button,
 }
 
 .sekundar {
-    background: transparent;
+    background: var(--yta);
     color: var(--text);
-    border-color: var(--linje);
+    border-color: #adb8b0;
+    font-weight: 600;
 }
 
 .sekundar:hover {
+    background: var(--yta);
     border-color: var(--text);
 }
 
