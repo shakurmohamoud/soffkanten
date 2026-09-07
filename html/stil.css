@@ -171,7 +171,7 @@ a {
 }
 
 .beskrivning {
-    margin: 0 0 3rem;
+    margin: 0 0 2rem;
     color: var(--svag);
     max-width: 52ch;
 }
@@ -267,6 +267,7 @@ ul {
 /* Inläggen hänger på en linje som håller ihop samtalet */
 .inlaggslista {
     position: relative;
+    margin-top: 2.5rem;
     padding-left: 2.1rem;
 }
 
@@ -327,7 +328,7 @@ ul {
 /* Formulär */
 label {
     display: block;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
     font-size: 0.85rem;
     font-weight: 600;
 }
@@ -336,7 +337,7 @@ input,
 textarea {
     width: 100%;
     padding: 0.7rem 0.85rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     font-family: inherit;
     font-size: 0.95rem;
     background: var(--yta);
@@ -353,6 +354,15 @@ textarea:focus {
 
 textarea {
     resize: vertical;
+}
+
+/* Formulär som inte ska vara bredare än att texten är lätt att läsa */
+.smaltformular {
+    max-width: 460px;
+}
+
+.smaltformular textarea {
+    max-width: 100%;
 }
 
 button,
@@ -382,6 +392,7 @@ button,
 
 /* Inbjudningslänken visas i ett fält man kan kopiera från */
 .inbjudningslank {
+    max-width: 460px;
     font-size: 0.85rem;
     color: var(--svag);
 }
@@ -396,6 +407,7 @@ button,
 }
 
 .fel {
+    max-width: 460px;
     padding: 0.85rem 1rem;
     margin-bottom: 1.25rem;
     border-left: 3px solid #a8482f;
