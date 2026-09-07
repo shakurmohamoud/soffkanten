@@ -97,7 +97,7 @@ require __DIR__ . '/../src/header.php';
     <p class="fel"><?= htmlspecialchars($fel) ?></p>
 <?php endif; ?>
 
-<form method="post" class="svarsformular">
+<form method="post" class="smaltformular">
     <label for="text">Ditt svar</label>
     <textarea id="text" name="text" rows="5" required></textarea>
 
