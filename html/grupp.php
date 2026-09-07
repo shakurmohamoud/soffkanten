@@ -102,11 +102,47 @@ require __DIR__ . '/../src/header.php';
 
 <h1><?= htmlspecialchars($grupp['name']) ?></h1>
 
-<p><?= htmlspecialchars($grupp['description']) ?></p>
+<p class="beskrivning"><?= htmlspecialchars($grupp['description']) ?></p>
+
+<h2>Diskussioner</h2>
+
+<?php if (!$amnen): ?>
+    <p>Inga diskussioner än. Starta den första nedan.</p>
+<?php else: ?>
+    <ul class="amneslista">
+        <?php foreach ($amnen as $amne): ?>
+            <li>
+                <a href="amne.php?id=<?= (int) $amne['id'] ?>">
+                    <?= htmlspecialchars($amne['title']) ?>
+                </a>
+
+                <span class="meta">
+                    startad av <?= htmlspecialchars($amne['first_name'] . ' ' . $amne['last_name']) ?>
+                </span>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+
+<h2>Starta en diskussion</h2>
+
+<?php if ($fel !== ''): ?>
+    <p class="fel"><?= htmlspecialchars($fel) ?></p>
+<?php endif; ?>
+
+<form method="post" class="smaltformular">
+    <input type="hidden" name="atgard" value="amne">
+
+    <label for="rubrik">Ämne</label>
+    <input type="text" id="rubrik" name="rubrik" maxlength="200" required>
+
+    <label for="text">Första inlägget</label>
+    <textarea id="text" name="text" rows="5" required></textarea>
+
+    <button type="submit">Starta diskussion</button>
+</form>
 
 <?php if ($roll === 'admin'): ?>
-    <p>Du är administratör för den här gruppen.</p>
-
     <h2>Ansökningar</h2>
 
     <?php if (!$ansokningar): ?>
@@ -137,7 +173,7 @@ require __DIR__ . '/../src/header.php';
             <li>
                 <span>
                     <?= htmlspecialchars($medlem['first_name'] . ' ' . $medlem['last_name']) ?>
-                    (<?= $medlem['role'] === 'admin' ? 'administratör' : 'medlem' ?>)
+                    <span class="roll"><?= $medlem['role'] === 'admin' ? 'administratör' : 'medlem' ?></span>
                 </span>
 
                 <?php if ((int) $medlem['id'] === $anvandarId): ?>
@@ -148,7 +184,7 @@ require __DIR__ . '/../src/header.php';
                         <input type="hidden" name="anvandar_id" value="<?= (int) $medlem['id'] ?>">
                         <input type="hidden" name="roll" value="<?= $medlem['role'] === 'admin' ? 'member' : 'admin' ?>">
 
-                        <button type="submit">
+                        <button type="submit" class="sekundar">
                             <?= $medlem['role'] === 'admin' ? 'Gör till medlem' : 'Gör till administratör' ?>
                         </button>
                     </form>
@@ -168,46 +204,8 @@ require __DIR__ . '/../src/header.php';
     <form method="post">
         <input type="hidden" name="atgard" value="inbjudan">
 
-        <button type="submit">Skapa inbjudningslänk</button>
+        <button type="submit" class="sekundar">Skapa inbjudningslänk</button>
     </form>
-<?php endif; ?>
-
-<h2>Starta en diskussion</h2>
-
-<?php if ($fel !== ''): ?>
-    <p class="fel"><?= htmlspecialchars($fel) ?></p>
-<?php endif; ?>
-
-<form method="post" class="amnesformular">
-    <input type="hidden" name="atgard" value="amne">
-
-    <label for="rubrik">Ämne</label>
-    <input type="text" id="rubrik" name="rubrik" maxlength="200" required>
-
-    <label for="text">Första inlägget</label>
-    <textarea id="text" name="text" rows="5" required></textarea>
-
-    <button type="submit">Starta diskussion</button>
-</form>
-
-<h2>Diskussioner</h2>
-
-<?php if (!$amnen): ?>
-    <p>Inga diskussioner än.</p>
-<?php else: ?>
-    <ul class="amneslista">
-        <?php foreach ($amnen as $amne): ?>
-            <li>
-                <a href="amne.php?id=<?= (int) $amne['id'] ?>">
-                    <?= htmlspecialchars($amne['title']) ?>
-                </a>
-
-                <span class="meta">
-                    startad av <?= htmlspecialchars($amne['first_name'] . ' ' . $amne['last_name']) ?>
-                </span>
-            </li>
-        <?php endforeach; ?>
-    </ul>
 <?php endif; ?>
 
 <?php require __DIR__ . '/../src/footer.php'; ?>
