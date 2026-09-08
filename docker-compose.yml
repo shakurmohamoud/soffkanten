@@ -7,13 +7,12 @@ services:
       - ./html:/var/www/html
       - ./src:/var/www/src
     environment:
-      DB_HOST: ${DB_HOST}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASS: ${DB_PASS}
+      DB_HOST: db
+      DB_NAME: soffkanten
+      DB_USER: soffkanten
+      DB_PASS: hemligt
     depends_on:
       - db
-
   db:
     image: mysql:8.0
     environment:
@@ -25,6 +24,7 @@ services:
       - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
-
+      # schema.sql körs automatiskt när databasen startas första gången
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
 volumes:
   dbdata:
