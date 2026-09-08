@@ -417,6 +417,14 @@ button,
     color: #7d3521;
 }
 
+.fel p {
+    margin: 0 0 0.4rem;
+}
+
+.fel p:last-child {
+    margin-bottom: 0;
+}
+
 footer {
     padding: 2rem;
     text-align: center;

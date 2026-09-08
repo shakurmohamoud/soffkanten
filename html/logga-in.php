@@ -36,17 +36,13 @@ require __DIR__ . '/../src/header.php';
     <p class="fel"><?= htmlspecialchars($fel) ?></p>
 <?php endif; ?>
 
-<form method="post">
-    <p>
-        <label for="epost">E-post</label><br>
-        <input type="email" id="epost" name="epost"
-               value="<?= htmlspecialchars($epost) ?>" required>
-    </p>
+<form method="post" class="smaltformular">
+    <label for="epost">E-post</label>
+    <input type="email" id="epost" name="epost"
+           value="<?= htmlspecialchars($epost) ?>" required>
 
-    <p>
-        <label for="losenord">Lösenord</label><br>
-        <input type="password" id="losenord" name="losenord" required>
-    </p>
+    <label for="losenord">Lösenord</label>
+    <input type="password" id="losenord" name="losenord" required>
 
     <button type="submit">Logga in</button>
 </form>

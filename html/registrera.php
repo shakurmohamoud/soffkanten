@@ -58,41 +58,31 @@ require __DIR__ . '/../src/header.php';
 <h1>Skapa konto</h1>
 
 <?php if ($fel): ?>
-    <ul class="fel">
+    <div class="fel">
         <?php foreach ($fel as $meddelande): ?>
-            <li><?= htmlspecialchars($meddelande) ?></li>
+            <p><?= htmlspecialchars($meddelande) ?></p>
         <?php endforeach; ?>
-    </ul>
+    </div>
 <?php endif; ?>
 
-<form method="post">
-    <p>
-        <label for="fornamn">Förnamn</label><br>
-        <input type="text" id="fornamn" name="fornamn"
-               value="<?= htmlspecialchars($fornamn) ?>" required>
-    </p>
+<form method="post" class="smaltformular">
+    <label for="fornamn">Förnamn</label>
+    <input type="text" id="fornamn" name="fornamn"
+           value="<?= htmlspecialchars($fornamn) ?>" required>
 
-    <p>
-        <label for="efternamn">Efternamn</label><br>
-        <input type="text" id="efternamn" name="efternamn"
-               value="<?= htmlspecialchars($efternamn) ?>" required>
-    </p>
+    <label for="efternamn">Efternamn</label>
+    <input type="text" id="efternamn" name="efternamn"
+           value="<?= htmlspecialchars($efternamn) ?>" required>
 
-    <p>
-        <label for="epost">E-post</label><br>
-        <input type="email" id="epost" name="epost"
-               value="<?= htmlspecialchars($epost) ?>" required>
-    </p>
+    <label for="epost">E-post</label>
+    <input type="email" id="epost" name="epost"
+           value="<?= htmlspecialchars($epost) ?>" required>
 
-    <p>
-        <label for="losenord">Lösenord</label><br>
-        <input type="password" id="losenord" name="losenord" required>
-    </p>
+    <label for="losenord">Lösenord</label>
+    <input type="password" id="losenord" name="losenord" required>
 
-    <p>
-        <label for="losenord_igen">Upprepa lösenord</label><br>
-        <input type="password" id="losenord_igen" name="losenord_igen" required>
-    </p>
+    <label for="losenord_igen">Upprepa lösenord</label>
+    <input type="password" id="losenord_igen" name="losenord_igen" required>
 
     <button type="submit">Skapa konto</button>
 </form>

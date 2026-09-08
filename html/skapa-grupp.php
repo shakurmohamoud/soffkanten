@@ -41,28 +41,24 @@ require __DIR__ . '/../src/header.php';
 
 <h1>Skapa grupp</h1>
 
-<p>Du blir administratör för gruppen du skapar.</p>
+<p class="beskrivning">Du blir administratör för gruppen du skapar.</p>
 
 <?php if ($fel): ?>
-    <ul class="fel">
+    <div class="fel">
         <?php foreach ($fel as $meddelande): ?>
-            <li><?= htmlspecialchars($meddelande) ?></li>
+            <p><?= htmlspecialchars($meddelande) ?></p>
         <?php endforeach; ?>
-    </ul>
+    </div>
 <?php endif; ?>
 
-<form method="post">
-    <p>
-        <label for="namn">Namn på gruppen</label><br>
-        <input type="text" id="namn" name="namn"
-               value="<?= htmlspecialchars($namn) ?>" required>
-    </p>
+<form method="post" class="smaltformular">
+    <label for="namn">Namn på gruppen</label>
+    <input type="text" id="namn" name="namn"
+           value="<?= htmlspecialchars($namn) ?>" required>
 
-    <p>
-        <label for="beskrivning">Vad ska diskuteras här?</label><br>
-        <textarea id="beskrivning" name="beskrivning" rows="4"
-                  required><?= htmlspecialchars($beskrivning) ?></textarea>
-    </p>
+    <label for="beskrivning">Vad ska diskuteras här?</label>
+    <textarea id="beskrivning" name="beskrivning" rows="4"
+              required><?= htmlspecialchars($beskrivning) ?></textarea>
 
     <button type="submit">Skapa grupp</button>
 </form>
