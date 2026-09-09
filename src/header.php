@@ -1,9 +1,12 @@
 <?php
+
 /**
  * Toppen av varje sida - logotyp och meny
  * Sidan sätter $sidtitel innan den laddar in den här filen
  */
+
 require_once __DIR__ . '/auth.php';
+
 $inloggad = inloggadAnvandare();
 $titel = $sidtitel ?? 'Soffkanten';
 ?>
@@ -19,6 +22,7 @@ $titel = $sidtitel ?? 'Soffkanten';
 <body>
     <header>
         <a href="index.php" class="logotyp">Soffkanten</a>
+
         <nav>
             <?php if ($inloggad): ?>
                 <a href="grupper.php">Alla grupper</a>
@@ -31,4 +35,5 @@ $titel = $sidtitel ?? 'Soffkanten';
             <?php endif; ?>
         </nav>
     </header>
+
     <main>
