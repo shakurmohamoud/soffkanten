@@ -437,6 +437,15 @@ footer {
     border-top: 1px solid var(--linje);
 }
 
+/* Anpassningar för surfplatta */
+@media (max-width: 900px) {
+    /* Tre rutor på två kolumner ser skevt ut, en kolumn blir jämnare */
+    .funktioner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
 /* Anpassningar för mobil och smal skärm */
 @media (max-width: 600px) {
     header {
