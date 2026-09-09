@@ -200,13 +200,15 @@ ul {
     letter-spacing: -0.04em;
 }
 
+/* Accentfärgen visar att gruppnamnet går att klicka på */
 .grupplista h2 a {
-    color: var(--text);
+    color: var(--accent);
     text-decoration: none;
 }
 
 .grupplista h2 a:hover {
-    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
 }
 
 .grupplista p {
@@ -250,18 +252,20 @@ ul {
     border-bottom: none;
 }
 
+/* Accentfärgen visar att rubriken går att klicka på */
 .amneslista a {
     font-family: var(--rubrik);
     font-weight: 600;
     font-size: 1.4rem;
     letter-spacing: -0.04em;
     line-height: 1.2;
-    color: var(--text);
+    color: var(--accent);
     text-decoration: none;
 }
 
 .amneslista a:hover {
-    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
 }
 
 /* Inläggen hänger på en linje som håller ihop samtalet */
