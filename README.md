@@ -28,6 +28,8 @@ Databasen sätts upp automatiskt första gången. `db/schema.sql` monteras in
 i MySQL-containern och körs när den startar, så du behöver inte göra något
 extra.
 
+Databasen är tom första starten. Registrera ett konto på /registrera.php
+
 Datan sparas i volymen `dbdata` och finns kvar efter `docker compose down`.
 
 ## Var finns vad
