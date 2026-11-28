@@ -1,20 +1,18 @@
 # Soffkanten
 
-Ett forum där man skapar ett konto, går med i grupper och pratar om det
-man är intresserad av.
+A forum where you create an account, join groups and talk about what
+you are interested in.
 
-Uppgift 2: Let's talk about it i kursen Systemutveckling FSU25D på Medieinstitutet.
+## Tech
 
-## Teknik
-
-- PHP 8.3 med Apache
+- PHP 8.3 with Apache
 - MySQL 8
 - Docker
-- PDO med prepared statements
+- PDO with prepared statements
 
-Inga ramverk, ingen JavaScript. Allt renderas i PHP.
+No frameworks and no JavaScript. Everything is rendered in PHP.
 
-## Kom igång
+## Get started
 
 ```
 git clone https://github.com/shakurmohamoud/soffkanten.git
@@ -22,37 +20,38 @@ cd soffkanten
 docker compose up -d
 ```
 
-Öppna sedan http://localhost:8080.
+Then open http://localhost:8080.
 
-Databasen sätts upp automatiskt första gången. `db/schema.sql` monteras in
-i MySQL-containern och körs när den startar, så du behöver inte göra något
-extra.
+The database sets itself up the first time. `db/schema.sql` is mounted into
+the MySQL container and runs when it starts, so you do not have to do
+anything extra.
 
-Databasen är tom första starten. Registrera ett konto på /registrera.php
+The database is empty on the first start. Create an account on /registrera.php
 
-Datan sparas i volymen `dbdata` och finns kvar efter `docker compose down`.
+The data is stored in the volume `dbdata` and stays there after
+`docker compose down`.
 
-## Var finns vad
+## Where things are
 
-**Sidor** ligger i `html/`, **funktioner** i `src/`, **databasen** i
+**Pages** are in `html/`, **functions** in `src/`, **the database** in
 `db/schema.sql`.
 
-| Funktion              | Fil                                                        |
-| --------------------- | ---------------------------------------------------------- |
-| Skapa konto, logga in | `html/registrera.php`, `html/logga-in.php`, `src/auth.php` |
-| Skapa grupp           | `html/skapa-grupp.php`, `src/grupper.php`                  |
-| Ansöka och godkänna   | `html/grupper.php`, `html/grupp.php`, `src/grupper.php`    |
-| Roller                | `sattRoll` i `src/grupper.php`                             |
-| Diskussioner och svar | `html/amne.php`, `src/diskussioner.php`                    |
-| Inbjudningslänk       | `html/inbjudan.php`, `src/inbjudningar.php`                |
+| Feature                 | File                                                       |
+| ----------------------- | ---------------------------------------------------------- |
+| Create account, log in  | `html/registrera.php`, `html/logga-in.php`, `src/auth.php` |
+| Create a group          | `html/skapa-grupp.php`, `src/grupper.php`                  |
+| Apply and approve       | `html/grupper.php`, `html/grupp.php`, `src/grupper.php`    |
+| Roles                   | `sattRoll` in `src/grupper.php`                            |
+| Discussions and replies | `html/amne.php`, `src/diskussioner.php`                    |
+| Invite link             | `html/inbjudan.php`, `src/inbjudningar.php`                |
 
-Att endast admin kan godkänna ansökningar och ändra roller ligger i
-databasen, inte bara i PHP. Titta på självjoinen i `godkannAnsokan` och
-`sattRoll`.
+Only admins can approve applications and change roles. That rule lives in
+the database, not just in PHP. Look at the self join in `godkannAnsokan`
+and `sattRoll`.
 
-## Lösenorden i docker-compose.yml
+## The passwords in docker-compose.yml
 
-Databasens lösenord står i klartext i `docker-compose.yml`, så att
-projektet går att klona och köra direkt utan att man behöver fixa en `.env`
-först. I ett riktigt projekt hade de legat i miljövariabler och aldrig
-hamnat i repot.
+The database passwords are in plain text in `docker-compose.yml`, so the
+project can be cloned and run right away without setting up a `.env` first.
+In a real project they would live in environment variables and never end up
+in the repo.
